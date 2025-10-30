@@ -1,5 +1,7 @@
 package entidades;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,11 @@ public class HomeSolution implements IHomeSolution {
 	private Map<Integer, Proyecto>proyectos= new HashMap<>();
 	private Map<Integer, Empleado> empleados = new HashMap<>();
 	private int contadorLegajos = 1;
+	private Integer contadorIdProyecto = 1; 
 	private Queue<Empleado>empleadosDisponibles;
+	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //lo usamos para pasar fechas de String a LocalDate
+	
 	
 	/*Se agregan las siguientes funcionalidades:
 - 19 Obtener tareas de un proyecto que aún no hayan sido asignadas.
@@ -79,11 +85,26 @@ public class HomeSolution implements IHomeSolution {
      * @param fin Fecha de finalización estimada (formato YYYY-MM-DD).
      * @throws IllegalArgumentException Si los datos son inconsistentes o faltan.
      */
+	
 	@Override
-	public void registrarProyecto(String[] titulos, String[] descripciones, double[] duracion, String string,
-			String[] cliente, String string2, String string3) {
+	public void registrarProyecto(String[] tituloTarea, String[] descripTarea, double[] duracionTarea, 
+			String domicilio, String[] cliente, String fechaInicio, String fechaFin) {
+		if (cliente == null || cliente.length == 0   || domicilio == null || domicilio.isEmpty() )
+	        throw new IllegalArgumentException("Faltan datos para crear un Proyecto");  
+		if( tituloTarea == null || tituloTarea.length == 0 )
+			throw new IllegalArgumentException("Agregar tareas para crear un Proyecto");
 		
+        LocalDate fecha1 = LocalDate.parse(fechaInicio, formatter);
+        LocalDate fecha2 = LocalDate.parse(fechaFin, formatter);
 		
+		if( fecha1.isAfter(fecha2)) //  isAfter es metodo de LocalDate
+			throw new IllegalArgumentException("La fecha de finalización no puede ser anterior al inicio");
+		
+		Integer id =contadorIdProyecto ++;
+		Proyecto nuevo = new Proyecto(tituloTarea, descripTarea, duracionTarea, 
+				domicilio, cliente, fechaInicio, fechaFin );
+		nuevo.setId(id);
+		proyectos.put(id, nuevo);			
 	}	
 
 	

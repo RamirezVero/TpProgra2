@@ -7,7 +7,7 @@ public class Tarea {
 	private String titulo;
 	private String descripcion;
 	private boolean medioDia;
-	private double diasEstimados;
+	private double duracion;
 	private double diasRetraso;
 	private boolean estadoterminada;
 	private LocalDate fechaPrevistaFin;
@@ -21,7 +21,7 @@ public class Tarea {
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.medioDia = medioDia;
-		this.diasEstimados = diasEstimados;
+		this.duracion = diasEstimados;
 		this.diasRetraso = diasRetraso;
 		this.fechaPrevistaFin = fechaPrevistaFin;
 	}
