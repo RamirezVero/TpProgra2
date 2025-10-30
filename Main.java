@@ -16,7 +16,7 @@ public class Main {
         homeSolution.registrarEmpleado("Juan",15000);
         homeSolution.registrarEmpleado("Luis",80000, "EXPERTO");
         homeSolution.registrarEmpleado("Julieta",15000);
-        //PanelManager panelManager=new PanelManager(homeSolution);
+        PanelManager panelManager=new PanelManager(homeSolution);
         homeSolution.listarEmpleados();//prueba
 
         }

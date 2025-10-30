@@ -30,7 +30,7 @@ public class HomeSolution implements IHomeSolution {
 	public void registrarEmpleado(String nombre, double valor) {// parámetros de empleado contratado 
 		 // Validamos datos
         if (nombre == null || nombre.isEmpty() || valor <= 0) {
-            throw new IllegalArgumentException("Hay datos inválidos");
+            throw new IllegalArgumentException("Faltan datos o son inválidos");
         }        
         int legajo = contadorLegajos++;
         
@@ -58,6 +58,7 @@ public class HomeSolution implements IHomeSolution {
 
 	    int legajo = contadorLegajos++;
 	    EmpleadoDePlanta e = new EmpleadoDePlanta(nombre, "", legajo, 0, false, valor, categoria);
+	    e.setLegajo(legajo);
 	    empleados.put(legajo, e);
 	}
 	//prueba
@@ -66,6 +67,24 @@ public class HomeSolution implements IHomeSolution {
 	        System.out.println("Legajo: " + e.getLegajo() + " | Nombre: " + e.getNombre());
 	    }
 	}
+	/**
+     * Registra un nuevo proyecto en el sistema.
+     *
+     * @param titulos Títulos de las tareas del proyecto.
+     * @param descripcion Descripciones de cada tarea.
+     * @param dias Días estimados de duración de cada tarea.
+     * @param domicilio Domicilio donde se desarrollará el proyecto.
+     * @param cliente Datos del cliente (nombre, mail, teléfono).
+     * @param inicio Fecha de inicio del proyecto (formato YYYY-MM-DD).
+     * @param fin Fecha de finalización estimada (formato YYYY-MM-DD).
+     * @throws IllegalArgumentException Si los datos son inconsistentes o faltan.
+     */
+	@Override
+	public void registrarProyecto(String[] titulos, String[] descripciones, double[] duracion, String string,
+			String[] cliente, String string2, String string3) {
+		
+		
+	}	
 
 	
 	@Override
@@ -78,69 +97,21 @@ public class HomeSolution implements IHomeSolution {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public Object[] empleadosNoAsignados() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public List<Tupla<Integer, String>> empleados() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	@Override
-	public void registrarProyecto(String[] titulos, String[] descripciones, double[] duracion, String string,
-			String[] cliente, String string2, String string3) {
-		// TODO Auto-generated method stub
-		
-	}	
-	@Override
-	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer consultarSeleccionado) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public double costoProyecto() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	@Override
 	public void finalizarProyecto(Integer consultarSeleccionado, String fecha) {
 		// TODO Auto-generated method stub
 		
 	}
-	public String consultarProyecto(Integer numero) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public boolean estaFinalizado(Integer consultarSeleccionado) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-    //gui ListaProyectos
-	public List<Tupla<Integer, String>> proyectosPendientes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Tupla<Integer, String>> proyectosActivos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	 /**
+   * Reasigna un empleado a una tarea determinada dentro de un proyecto.
+   * Libera al empleado anterior.
+   * @param numero Número o código del proyecto.
+   * @param legajo Legajo del empleado a reasignar.
+   * @param titulo Título de la tarea.
+   * @throw  Exception si no hay empleados disponibles o si no tiene asignado un empleado previamente
+   */
 	
-	public List<Tupla<Integer, String>> proyectosFinalizados() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-		
-	@Override
-	public Object[] tareasDeUnProyecto(Integer numero) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
 	@Override
 	public void reasignarEmpleadoEnProyecto(Integer consultarSeleccionado, Integer legajo, String titulo) {
 		// TODO Auto-generated method stub
@@ -151,6 +122,84 @@ public class HomeSolution implements IHomeSolution {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public double costoProyecto() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
+	public List<Tupla<Integer, String>> proyectosFinalizados() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	 //gui ListaProyectos
+	public List<Tupla<Integer, String>> proyectosPendientes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Tupla<Integer, String>> proyectosActivos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Object[] empleadosNoAsignados() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public boolean estaFinalizado(Integer consultarSeleccionado) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public int consultarCantidadRetrasosEmpleado(Integer legajo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer consultarSeleccionado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object[] tareasProyectoNoAsignadas(Integer numero) {
+		// TODO Auto-generated method stub
+		return null;
+	}	
+	
+	@Override
+	public Object[] tareasDeUnProyecto(Integer numero) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public String consultarDomicilioProyecto(Integer consultarSeleccionado) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean tieneRestrasos(Integer legajo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public List<Tupla<Integer, String>> empleados() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+   
+	public String consultarProyecto(Integer numero) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public void finalizarTarea(Integer consultarSeleccionado, String titulo) {
 		// TODO Auto-generated method stub
@@ -168,30 +217,6 @@ public class HomeSolution implements IHomeSolution {
 		
 	}
 	
-
-	
-
-	
-	@Override
-	public String consultarDomicilioProyecto(Integer consultarSeleccionado) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public int consultarCantidadRetrasosEmpleado(Integer legajo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public Object[] tareasProyectoNoAsignadas(Integer numero) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public boolean tieneRestrasos(Integer legajo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	@Override
 	public double costoProyecto(Integer numero) {
 		// TODO Auto-generated method stub

@@ -1,6 +1,5 @@
 package entidades;
 
-import java.util.List;
 
 public abstract class Empleado {
 	private String nombre;

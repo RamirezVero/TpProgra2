@@ -25,12 +25,12 @@ public class EmpleadoDePlanta extends Empleado {
     public void setCategoria(String categoria) {
         if (categoria == null || categoria.isEmpty())
             throw new IllegalArgumentException("La categoría no puede ser nula ni vacía.");
-        // validación case-insensitive
-        if (!categoria.equalsIgnoreCase("INICIAL") &&
-            !categoria.equalsIgnoreCase("TECNICO") &&
-            !categoria.equalsIgnoreCase("EXPERTO")) {
-            throw new IllegalArgumentException("Categoría inválida: " + categoria);
-        }
+        
         this.categoria = categoria.toUpperCase(); 
+        if (!categoria.equals("INICIAL") &&
+                !categoria.equals("TECNICO") &&
+                !categoria.equals("EXPERTO")) {
+                throw new IllegalArgumentException("Categoría inválida: " + categoria);
+            }
     }
 }
