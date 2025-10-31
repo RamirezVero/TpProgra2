@@ -118,12 +118,10 @@ public class HomeSolution implements IHomeSolution {
 		Proyecto proyecto = proyectos.get(idProyecto);
 	    if (proyecto == null) {
 	        throw new IllegalArgumentException("No existe un proyecto con esa identificación");
-	    }
-	    
+	    }	    
 	    if (proyecto.estaFinalizado()) {
 	        throw new Exception("El proyecto ya está finalizado");
 	    }
-
 	    Tarea tarea = proyecto.getTareaPorTitulo(titulo);
 	    if (tarea == null) {
 	        throw new IllegalArgumentException("No existe una tarea con ese título en el proyecto");
@@ -142,11 +140,45 @@ public class HomeSolution implements IHomeSolution {
 		Empleado primeroDeLaCola = empleadosDisponibles.peek(); // es retornado y eliminado de la cola
 		return primeroDeLaCola;
 	}
-
-
+	
+	/**
+     * Asigna a la tarea el empleado con menos retrasos acumulados.
+     * @param numero Número o código del proyecto.
+     * @param titulo Título de la tarea.
+     *@throws Exception si no hay empleados disponibles o la tarea ya fue asignada o el proyecto esta finalizado
+     */
 	@Override
-	public void asignarResponsableMenosRetraso(Integer consultarSeleccionado, String titulo) {
-		// TODO Auto-generated method stub
+	public void asignarResponsableMenosRetraso(Integer idProyecto, String titulo)throws Exception {
+		
+		Proyecto proyecto = proyectos.get(idProyecto);
+	    if (proyecto == null)
+	        throw new IllegalArgumentException("No existe un proyecto con esa identificación");
+	  	    
+	    if (proyecto.estaFinalizado()) 
+	        throw new Exception("El proyecto ya está finalizado");
+	    
+	    Tarea tarea = proyecto.getTareaPorTitulo(titulo);
+	    if (tarea == null) 
+	        throw new IllegalArgumentException("No existe una tarea con ese título en el proyecto");	    
+			
+		if(tarea.getEmpleado() != null) 
+			throw new Exception("La tarea y tiene un empleado asignado");
+		
+		Empleado empleadoSeleccionado = null;
+	    for (Empleado e : empleados.values()) {
+	        if (!e.isAsignado()) { 
+	            if (empleadoSeleccionado == null || e.getCantRetrasos() < empleadoSeleccionado.getCantRetrasos()) {
+	                empleadoSeleccionado = e;
+	            }
+	        }
+	    }
+	    //si después de buscar, no hay empleados disponibles:
+	    if (empleadoSeleccionado == null) {
+	        throw new Exception("No hay empleados disponibles");
+	    }
+	    
+	    tarea.setEmpleado(empleadoSeleccionado);
+	    empleadoSeleccionado.setAsignado(true);
 		
 	}
 	

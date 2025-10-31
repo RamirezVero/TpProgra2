@@ -16,7 +16,7 @@ public class Proyecto {
 	private String fechaPrevistaFin;
 	private String fechaFin;
 	
-	private Estado estado;
+	private String estado;
 	private Map<String, Tarea>tareas;
 	private Set<Empleado>historialEmpleados;
 	private boolean finalizado;
@@ -78,7 +78,7 @@ public class Proyecto {
 	public String getFechaFin() {
 		return fechaFin;
 	}
-	public Estado getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 	public Map<String, Tarea> getTareas() {
@@ -88,7 +88,7 @@ public class Proyecto {
 		return historialEmpleados;
 	}
 	public boolean estaFinalizado() {
-		return finalizado;
+		return true;
 	}
 
 	public double getCostoAcumulado() {
@@ -106,6 +106,10 @@ public class Proyecto {
 
 	public Tarea getTareaPorTitulo(String titulo) {		
 		return tarea;
+	}
+
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
 	}
 
 

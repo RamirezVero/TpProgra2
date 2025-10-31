@@ -36,4 +36,11 @@ public abstract class Empleado {
 	public void setLegajo(int legajo) {
 	    this.legajo = legajo;
 	}
+
+	public void setAsignado(boolean asignado) {
+	 this.asignado = asignado;
+	}
+	
+	
+	
 }
