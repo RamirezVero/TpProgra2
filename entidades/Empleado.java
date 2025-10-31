@@ -3,14 +3,12 @@ package entidades;
 
 public abstract class Empleado {
 	private String nombre;
-	private String apellido;
-	private int legajo;      //lo cambié de String a int
+	private int legajo;      //lo cambié de String a int para que coincida con Interfaz
 	private int cantRetrasos;
 	private boolean asignado;
 	
-	 public Empleado(String nombre, String apellido, int legajo, int cantRetrasos, boolean asignado) {
+	 public Empleado(String nombre, int legajo, int cantRetrasos, boolean asignado) {
 	        this.nombre = nombre;
-	        this.apellido = apellido;
 	        this.legajo = legajo;
 	        this.cantRetrasos = cantRetrasos;
 	        this.asignado = asignado;
@@ -21,11 +19,7 @@ public abstract class Empleado {
 	public String getNombre() {
 		return nombre;
 	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
+	
 	public int getCantRetrasos() {
 		return cantRetrasos;
 	}

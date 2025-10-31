@@ -1,6 +1,5 @@
 package entidades;
 
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
@@ -88,7 +87,7 @@ public class Proyecto {
 	public Set<Empleado> getHistorialEmpleados() {
 		return historialEmpleados;
 	}
-	public boolean isFinalizado() {
+	public boolean estaFinalizado() {
 		return finalizado;
 	}
 
@@ -99,10 +98,17 @@ public class Proyecto {
 		return huboRetraso;
 	}
 	
-	
 	public void setId(Integer id) {
 		this.id = id;		
 	}
+
+
+
+	public Tarea getTareaPorTitulo(String titulo) {		
+		return tarea;
+	}
+
+
 	
 	
 	

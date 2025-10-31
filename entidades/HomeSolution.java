@@ -16,7 +16,7 @@ public class HomeSolution implements IHomeSolution {
 	private Integer contadorIdProyecto = 1; 
 	private Queue<Empleado>empleadosDisponibles;
 	
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //lo usamos para pasar fechas de String a LocalDate
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //lo usamos para pasar fechas de String a LocalDate
 	
 	
 	/*Se agregan las siguientes funcionalidades:
@@ -41,7 +41,7 @@ public class HomeSolution implements IHomeSolution {
         int legajo = contadorLegajos++;
         
         EmpleadoContratado nuevo = new EmpleadoContratado(
-        	    nombre, "", legajo,0,false, valor
+        	    nombre, legajo,0,false, valor
         	);
         nuevo.setLegajo(legajo);
 
@@ -63,7 +63,7 @@ public class HomeSolution implements IHomeSolution {
 	        throw new IllegalArgumentException("El valor no puede ser negativo.");
 
 	    int legajo = contadorLegajos++;
-	    EmpleadoDePlanta e = new EmpleadoDePlanta(nombre, "", legajo, 0, false, valor, categoria);
+	    EmpleadoDePlanta e = new EmpleadoDePlanta(nombre, legajo, 0, false, valor, categoria);
 	    e.setLegajo(legajo);
 	    empleados.put(legajo, e);
 	}
@@ -107,12 +107,43 @@ public class HomeSolution implements IHomeSolution {
 		proyectos.put(id, nuevo);			
 	}	
 
-	
+	/**
+     * Asigna un empleado responsable a una tarea específica dentro de un proyecto.     *
+     * @param numero Número o código del proyecto.
+     * @param titulo Título de la tarea a asignar.
+     * @throws Exception si intenta asignar a una tarea ya asignada o el proyecto esta finalizado
+     */
 	@Override
-	public void asignarResponsableEnTarea(Integer consultarSeleccionado, String titulo) {
-		// TODO Auto-generated method stub
-		
+	public void asignarResponsableEnTarea(Integer idProyecto, String titulo) throws Exception {		
+		Proyecto proyecto = proyectos.get(idProyecto);
+	    if (proyecto == null) {
+	        throw new IllegalArgumentException("No existe un proyecto con esa identificación");
+	    }
+	    
+	    if (proyecto.estaFinalizado()) {
+	        throw new Exception("El proyecto ya está finalizado");
+	    }
+
+	    Tarea tarea = proyecto.getTareaPorTitulo(titulo);
+	    if (tarea == null) {
+	        throw new IllegalArgumentException("No existe una tarea con ese título en el proyecto");
+	    }
+	    // si la tarea ya tiene un empleado asignado
+	    if (tarea.getEmpleado() != null) {
+	        throw new Exception("La tarea ya tiene un empleado asignado");
+	    }
+	    
+	    Empleado empleado = seleccionarEmpleadoDisponible(); 
+	    
+	    //asignar el empleado obtenido
+	    tarea.setEmpleado(empleado);
 	}
+	private Empleado seleccionarEmpleadoDisponible() {  //selección FIFO
+		Empleado primeroDeLaCola = empleadosDisponibles.peek(); // es retornado y eliminado de la cola
+		return primeroDeLaCola;
+	}
+
+
 	@Override
 	public void asignarResponsableMenosRetraso(Integer consultarSeleccionado, String titulo) {
 		// TODO Auto-generated method stub
