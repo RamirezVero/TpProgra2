@@ -244,13 +244,43 @@ public class HomeSolution implements IHomeSolution {
    * @param legajo Legajo del empleado a reasignar.
    * @param titulo Título de la tarea.
    * @throw  Exception si no hay empleados disponibles o si no tiene asignado un empleado previamente
-   */
-	
+   */	
 	@Override
-	public void reasignarEmpleadoEnProyecto(Integer consultarSeleccionado, Integer legajo, String titulo) {
-		// TODO Auto-generated method stub
+	public void reasignarEmpleadoEnProyecto(Integer idProyecto, Integer legajo, String titulo) throws Exception {
+		Proyecto proyecto = proyectos.get(idProyecto); 
+		if (proyecto == null) {
+		        throw new IllegalArgumentException("No existe un proyecto con ese Id");
+		    }
 		
+		Tarea tarea = proyecto.getTareaPorTitulo(titulo);
+		if (tarea == null || tarea.isEstadoterminada() == true) 
+	        throw new IllegalArgumentException("La tarea no existe o está finalizada");	
+		
+		if (empleadosDisponibles.isEmpty()) {
+			throw new Exception("No hay empleados disponibles");
+		}
+		if(tarea.getEmpleado() == null) {
+			throw new Exception("La tarea no tiene un empleado asignado");
+		}
+		
+		Empleado nuevoAsignado = buscarEmpleadoPorLegajo(legajo);
+		
+		if(tarea.getEmpleado() != null) {
+			empleadosDisponibles.add(tarea.getEmpleado());
+			tarea.setEmpleado(nuevoAsignado);         
+		}				
 	}
+	public Empleado buscarEmpleadoPorLegajo(int legajo) {
+		for (Empleado e : empleados.values()) {
+			if (e.getLegajo() == legajo)
+				return e;			
+		}
+		return null;		
+	}
+	
+	
+	
+	
 	@Override
 	public void reasignarEmpleadoConMenosRetraso(Integer consultarSeleccionado, String titulo) {
 		// TODO Auto-generated method stub

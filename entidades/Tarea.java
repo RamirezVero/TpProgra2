@@ -111,7 +111,7 @@ public class Tarea {
 
 	public void setEmpleado(Empleado empleado) {
 		this.empleado = empleado;
-	}	
+	}
 	
 
 }
