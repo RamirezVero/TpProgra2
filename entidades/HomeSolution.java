@@ -209,13 +209,34 @@ public class HomeSolution implements IHomeSolution {
 	    tarea.liberarEmpleado();	    
 	}
 	
-	
-	
+	/**
+     * Marca un proyecto completo como finalizado.
+     * @param numero Número o código del proyecto.
+     * @param fin Fecha de inicio de finalización (formato YYYY-MM-DD).
+     * @throws IllegalArgumentException si la fecha es incorrecta( anterior a la fecha de inicio)
+     */
 	@Override
-	public void finalizarProyecto(Integer idProyecto, String fecha) {
-		// TODO Auto-generated method stub
-		
+	public void finalizarProyecto(Integer idProyecto, String fechaFin) throws IllegalArgumentException {
+		 
+		Proyecto proyecto = proyectos.get(idProyecto);
+	    if (proyecto == null) {
+	        throw new IllegalArgumentException("No existe un proyecto con ese número");
+	    }
+	    // convertir la fecha de String a LocalDate
+	    LocalDate fechaI = LocalDate.parse(proyecto.getFechaInicio(), formatter);
+        LocalDate fechaF = LocalDate.parse(fechaFin, formatter);
+
+	    // validar que la fecha no sea anterior a la de inicio
+	    if (fechaF.isBefore(fechaI)) {
+	        throw new IllegalArgumentException("La fecha de finalización no puede ser anterior a la fecha de inicio");
+	    }
+
+	    // marcar el proyecto como finalizado
+	    proyecto.setFechaRealFin(fechaFin);
+	    proyecto.setEstado(Estado.finalizado);
 	}
+	    
+	    	
 	 /**
    * Reasigna un empleado a una tarea determinada dentro de un proyecto.
    * Libera al empleado anterior.

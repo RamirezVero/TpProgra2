@@ -13,8 +13,9 @@ public class Proyecto {
 	private double[] duracion;
 	private String domicilio;
 	private String[] clienteDatos;
+	private String fechaInicio;
 	private String fechaPrevistaFin;
-	private String fechaFin;
+	private String fechaRealFin;
 	
 	private String estado;
 	private Map<String, Tarea>tareas;
@@ -36,14 +37,14 @@ public class Proyecto {
 
 
 	public Proyecto(String[] tituloTarea, String[] descripTarea, double[] duracion, String domicilio,
-			String[] cliente, String fechaInicio, String fechaFin) {
+			String[] cliente, String fechaInicio, String fechaRealFin) {
 		this.tituloTarea = tituloTarea;
 		this.descripTarea = descripTarea;
 		this.duracion = duracion;
 		this.domicilio = domicilio;
 		this.clienteDatos = cliente;
-		this.fechaPrevistaFin = fechaInicio;
-		this.fechaFin = fechaFin;
+		this.fechaInicio = fechaInicio;
+		this.fechaRealFin = fechaRealFin;
 	}
 
 
@@ -72,11 +73,14 @@ public class Proyecto {
 	public String[] getClienteDatos() {
 		return clienteDatos;
 	}
+	public String getFechaInicio() {
+		return fechaInicio;
+	}
 	public String getFechaPrevistaFin() {
 		return fechaPrevistaFin;
 	}
-	public String getFechaFin() {
-		return fechaFin;
+	public String getFechaRealFin() {
+		return fechaRealFin;
 	}
 	public String getEstado() {
 		return estado;
@@ -111,6 +115,22 @@ public class Proyecto {
 	public void setFinalizado(boolean finalizado) {
 		this.finalizado = finalizado;
 	}
+
+
+
+	public void setFechaRealFin(String fechaRealFin) {
+		this.fechaRealFin = fechaRealFin;
+		
+	}
+
+
+
+	public void setEstado(String finalizado) {
+		this.estado = finalizado;
+		
+	}
+
+
 
 
 	
