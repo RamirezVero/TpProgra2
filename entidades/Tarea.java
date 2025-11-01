@@ -25,6 +25,13 @@ public class Tarea {
 		this.diasRetraso = diasRetraso;
 		this.fechaPrevistaFin = fechaPrevistaFin;
 	}
+	
+	public void liberarEmpleado() {
+		if (empleado != null) {
+	        empleado.setAsignado(false);
+	        empleado = null;
+	    }		
+	}
 
 	public int getId() {
 		return id;

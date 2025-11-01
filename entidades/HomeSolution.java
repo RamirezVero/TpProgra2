@@ -182,8 +182,37 @@ public class HomeSolution implements IHomeSolution {
 		
 	}
 	
+	/**
+     * Marca una tarea como finalizada.    
+     * @param numero Número o código del proyecto.
+     * @param titulo Título de la tarea a finalizar.
+     * @throws Exception Si la tarea ya estaba finalizada.
+     */
 	@Override
-	public void finalizarProyecto(Integer consultarSeleccionado, String fecha) {
+	public void finalizarTarea(Integer idProyecto, String titulo) throws Exception {
+		Proyecto proyecto = proyectos.get(idProyecto);
+	    if (proyecto == null)
+	        throw new IllegalArgumentException("No existe un proyecto con esa identificación");
+	  	    
+	    if (proyecto.estaFinalizado()) 
+	        throw new Exception("El proyecto ya está finalizado");
+	    
+	    Tarea tarea = proyecto.getTareaPorTitulo(titulo);
+	    if (tarea == null || tarea.isEstadoterminada() == true) 
+	        throw new IllegalArgumentException("La tarea no existe o está finalizada");	
+	    
+	    
+	    tarea.setEstadoterminada(true); 
+	    if (tarea.getEmpleado() != null) {
+	        empleadosDisponibles.add(tarea.getEmpleado());//agrega al empleado a la cola
+	    }
+	    tarea.liberarEmpleado();	    
+	}
+	
+	
+	
+	@Override
+	public void finalizarProyecto(Integer idProyecto, String fecha) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -284,11 +313,7 @@ public class HomeSolution implements IHomeSolution {
 		return null;
 	}
 	
-	@Override
-	public void finalizarTarea(Integer consultarSeleccionado, String titulo) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	@Override
 	public void registrarRetrasoEnTarea(Integer consultarSeleccionado, String titulo, double dias) {
 		// TODO Auto-generated method stub

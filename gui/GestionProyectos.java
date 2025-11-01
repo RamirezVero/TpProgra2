@@ -143,7 +143,12 @@ public class GestionProyectos extends  JPanel{
             public void actionPerformed(ActionEvent actionEvent) {
                 if (seleccionValida()) {
                     String titulo = tareas.getSelectedItem().toString();
-                    panelManager.sistema().finalizarTarea(panelManager.consultarSeleccionado(), titulo);
+                    try {
+						panelManager.sistema().finalizarTarea(panelManager.consultarSeleccionado(), titulo);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"No hay tarea seleccionada");
