@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Queue;
 
 public class HomeSolution implements IHomeSolution {
-	private Proyecto proyecto;
-	private Empleado empleado;
+	/*private Proyecto proyecto;
+	private Empleado empleado;*/
 	private Map<Integer, Proyecto>proyectos= new HashMap<>();
 	private Map<Integer, Empleado> empleados = new HashMap<>();
 	private int contadorLegajos = 1;
@@ -162,24 +162,28 @@ public class HomeSolution implements IHomeSolution {
 	        throw new IllegalArgumentException("No existe una tarea con ese título en el proyecto");	    
 			
 		if(tarea.getEmpleado() != null) 
-			throw new Exception("La tarea y tiene un empleado asignado");
+			throw new Exception("La tarea ya tiene un empleado asignado");
 		
-		Empleado empleadoSeleccionado = null;
-	    for (Empleado e : empleados.values()) {
-	        if (!e.isAsignado()) { 
-	            if (empleadoSeleccionado == null || e.getCantRetrasos() < empleadoSeleccionado.getCantRetrasos()) {
-	                empleadoSeleccionado = e;
-	            }
-	        }
-	    }
+		
+		Empleado conMenosRetraso = emplConMenosRetraso();
 	    //si después de buscar, no hay empleados disponibles:
-	    if (empleadoSeleccionado == null) {
+	    if (conMenosRetraso == null) {
 	        throw new Exception("No hay empleados disponibles");
 	    }
 	    
-	    tarea.setEmpleado(empleadoSeleccionado);
-	    empleadoSeleccionado.setAsignado(true);
+	    tarea.setEmpleado(conMenosRetraso);
+	    conMenosRetraso.setAsignado(true);
 		
+	}
+	public Empleado emplConMenosRetraso() {
+		Empleado empleadoSeleccionado = null;
+		for (Empleado e : empleados.values()) {
+			if (empleadoSeleccionado == null
+		            || e.getCantRetrasos() < empleadoSeleccionado.getCantRetrasos()) {
+				empleadoSeleccionado = e;
+		        }
+	    }
+		return empleadoSeleccionado;		
 	}
 	
 	/**
@@ -277,14 +281,35 @@ public class HomeSolution implements IHomeSolution {
 		}
 		return null;		
 	}
-	
-	
-	
+		
+	/**
+     * Reasigna al empleado con menos retrasos acumulados a una tarea.
+     * Libera al empleado anterior.
+     * @param numero Número o código del proyecto.
+     * @param titulo Título de la tarea.
+     * @throw  Exception si no hay empleados disponibles o si no tiene asignado un empleado previamente
+     */
 	
 	@Override
-	public void reasignarEmpleadoConMenosRetraso(Integer consultarSeleccionado, String titulo) {
-		// TODO Auto-generated method stub
+	public void reasignarEmpleadoConMenosRetraso(Integer idProyecto, String titulo) throws Exception {
+		Proyecto proyecto = proyectos.get(idProyecto); 
+		if (proyecto == null) {
+		        throw new IllegalArgumentException("No existe un proyecto con ese Id");
+		    }		
+		Tarea tarea = proyecto.getTareaPorTitulo(titulo);
+		if (tarea == null || tarea.isEstadoterminada() == true) 
+	        throw new IllegalArgumentException("La tarea no existe o está finalizada");	
 		
+		if(tarea.getEmpleado() == null) {
+			throw new Exception("La tarea no tiene un empleado asignado");
+		}
+		Empleado sustituto = emplConMenosRetraso();
+		
+		if (sustituto == null) {
+	        throw new Exception("No hay empleados disponibles para reasignar");
+	    }
+		empleadosDisponibles.add(tarea.getEmpleado());
+		tarea.setEmpleado(sustituto);    
 	}
 	
 	public double costoProyecto() {
